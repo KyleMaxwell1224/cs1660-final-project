@@ -1,53 +1,23 @@
 package main
 
 import (
-	"context"
+	"bufio"
 	"fmt"
-	"io"
 	"os"
-
-	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/api/types/container"
-	"github.com/docker/docker/client"
-	"github.com/docker/go-connections/nat"
 )
 
 func main() {
-	ctx := context.Background()
-	config := &container.Config{
-		Image: "jupyter/tensorflow-notebook",
-		ExposedPorts: nat.PortSet{
-			"8888/tcp": struct{}{},
-		},
+	input := bufio.NewScanner(os.Stdin)
+	fmt.Println("Welcome to Kyle's Big Data Processing Application")
+
+	for input.Scan() {
+		fmt.Println("Please type the number that corresponds to which application you'd like to run:")
+		fmt.Println("1. Apache Hadoop")
+		fmt.Println("2. Apache Spark")
+		fmt.Println("3. Jupyter Notebook")
+		fmt.Printf("4. SonarQube and SonarScanner\n")
+		fmt.Print("Enter your number here > ")
+
 	}
 
-	hostConfig := &container.HostConfig{
-		PortBindings: nat.PortMap{
-			"8888/tcp": []nat.PortBinding{
-				{
-					HostIP:   "0.0.0.0",
-					HostPort: "8888",
-				},
-			},
-		},
-	}
-
-	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
-	if err != nil {
-		panic(err)
-	}
-	reader, err := cli.ImagePull(ctx, "jupyter/tensorflow-notebook", types.ImagePullOptions{})
-	if err != nil {
-		panic(err)
-	}
-	io.Copy(os.Stdout, reader)
-	resp, err := cli.ContainerCreate(ctx, config, hostConfig, nil, nil, "")
-	if err != nil {
-		panic(err)
-	}
-
-	if err := cli.ContainerStart(ctx, resp.ID, types.ContainerStartOptions{}); err != nil {
-		panic(err)
-	}
-	fmt.Println(resp.ID)
 }
