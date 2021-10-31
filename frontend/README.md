@@ -1,5 +1,5 @@
 #  Kyle Maxwell
-## CS 1660 Final Project
+## CS 1660 Final Project - Frontend
 
 Steps I will use to connect to GCP:
 		1. Currently, I have a cluster set up on DataProc in GCP that I will use for the Hadoop distributed file system.
