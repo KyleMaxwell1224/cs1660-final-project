@@ -13,3 +13,12 @@ div {
     margin-left: auto;
     margin-right: auto;
 }
+
+.mat-card {
+    margin-top: .4rem;
+    margin-bottom: .4rem;
+}
+
+.mat-card-title {
+    font-size: small;
+}
