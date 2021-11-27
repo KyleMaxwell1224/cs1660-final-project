@@ -12,6 +12,7 @@ app.use(fileUpload());
 
 
 app.listen(8000, () => {
+  submitWordCountJob();
     console.log('Server started!');
 })
 
@@ -31,8 +32,6 @@ const jobClient = new dataproc.v1.JobControllerClient({
   });
   
 const storage = new Storage();
-
-
 async function submitWordCountJob() {
     const job = {
       projectId: projectId,
@@ -63,7 +62,7 @@ async function submitWordCountJob() {
       .download();
   
     // Output a success message.
-    console.log(`Job finished successfully`);    
+    console.log(`Job finished successfully: ${output}`);    
 }
 
 async function topN(n) {
