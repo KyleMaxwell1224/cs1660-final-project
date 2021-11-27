@@ -1,0 +1,8 @@
+<a id='go-back-button' [routerLink]="['/loaded']" >Go Back to Engine</a>
+
+<div id="main-div">
+    <h1>Top-N</h1>
+    <label for="quantity">Quantity (between 1 and 20):</label>
+    <input style="margin-top: 1rem;" type="number" id="quantity" name="quantity"  [(ngModel)]="value" min="1" max="20">
+    <button mat-raised-button style="margin-top: 1rem;" color="primary" id="submit-button" (click)="submitTopN()">Submit Job</button>
+</div>

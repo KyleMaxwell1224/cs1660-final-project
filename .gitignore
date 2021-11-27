@@ -2,6 +2,7 @@
 # Created by https://www.toptal.com/developers/gitignore/api/angular
 # Edit at https://www.toptal.com/developers/gitignore?templates=angular
 final-project/
+.vscode/
 ### Angular ###
 ## Angular ##
 # compiled output

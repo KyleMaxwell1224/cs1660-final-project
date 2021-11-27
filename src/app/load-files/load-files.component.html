@@ -1,0 +1,23 @@
+<div *ngIf="!loading">
+    <form style = "display: inline-grid;" #fileuploads = "ngForm" (ngSubmit) = "submit(fileuploads.value)">
+        <input type="file" name = "files" ngModel #selectedFile style="display: none;" (change)="filesInputted($event)" multiple />
+        <input type="button" value="Browse and Select File(s)" (click)="filesInputted($event)" />
+        <br/>
+        <div *ngFor="let file of files">
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>{{file.name}}</mat-card-title>
+                    <mat-card-subtitle>{{bytesToMbs(file.size)}} MBs</mat-card-subtitle>
+                </mat-card-header>
+            </mat-card>
+        </div>  
+        <mat-icon>cloud_upload</mat-icon>
+        <br/>
+        <label for="files">Upload File(s) to Engine</label>
+        <input style="margin-top: 1rem; padding: .4rem;" type="submit" value = "Submit Files" >   
+    </form>
+</div>
+<div *ngIf="loading">
+    <h1>Uploading and Processing Files, Please Wait</h1>
+    <mat-progress-spinner></mat-progress-spinner>
+</div>

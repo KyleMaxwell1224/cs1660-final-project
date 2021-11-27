@@ -1,0 +1,9 @@
+<a id='go-back-button' [routerLink]="['/loaded']" >Go Back to Engine</a>
+
+<div id="main-div">
+    <h1>Kyle Search</h1>
+    <h2>(Like a normal search engine, but made by Kyle)</h2>
+    <label for="quantity">Search for a word</label>
+    <input style="margin-top: 1rem;" type="text" id="quantity" name="quantity"  [(ngModel)]="search" placeholder="Search...">
+    <button mat-raised-button color="primary" style="margin-top: 1rem;" id="submit-button" (click)="submitSearch()">Submit Search</button>
+</div>
