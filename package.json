@@ -10,6 +10,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular/animations": "^13.0.2",
     "@angular/cdk": "^12.2.13",
     "@angular/common": "~12.2.13",
     "@angular/compiler": "~12.2.13",
@@ -23,6 +24,7 @@
     "@google-cloud/storage": "^5.15.3",
     "Buffer": "^0.0.0",
     "concurrently": "^6.4.0",
+    "connect-multiparty": "^2.2.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-fileupload": "^1.2.1",

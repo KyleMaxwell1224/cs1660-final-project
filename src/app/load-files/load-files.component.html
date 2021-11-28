@@ -1,6 +1,6 @@
 <div *ngIf="!loading">
-    <form style = "display: inline-grid;" #fileuploads = "ngForm" (ngSubmit) = "submit(fileuploads.value)">
-        <input type="file" name = "files" ngModel #selectedFile style="display: none;" (change)="filesInputted($event)" multiple />
+    <form method='post' encType="multipart/form-data" style = "display: inline-grid;" #fileuploads = "ngForm" (ngSubmit) = "submit(fileuploads.value)">
+        <input type="file" name = "inputfiles" ngModel #selectedFile style="display: none;" (change)="filesInputted($event)" multiple />
         <input type="button" value="Browse and Select File(s)" (click)="filesInputted($event)" />
         <br/>
         <div *ngFor="let file of files">

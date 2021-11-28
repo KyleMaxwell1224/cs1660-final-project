@@ -11,13 +11,13 @@ export class LoadFilesService {
   
   constructor(private http: HttpClient) { }
 
-  async uploadFiles(files: File[]): Promise<File[]> {
+  async uploadFiles(files: FormData): Promise<File[]> {
     console.log("FILES; " + files)
+    const formData = new FormData(); 
     let httpHeaders = new HttpHeaders({
-        'Content-Type': 'application/json'
+        'Content-Type': 'UNDEFINED'
           });
-    const body = { files: files };
-    return this.http.post(this.API_URL + '/processfiles', body, { headers: httpHeaders }).toPromise()
+    return this.http.post(this.API_URL + '/processfiles', files, { headers: httpHeaders }).toPromise()
         .then(this.extractData)
         .catch(this.handleErrorPromise);
   }

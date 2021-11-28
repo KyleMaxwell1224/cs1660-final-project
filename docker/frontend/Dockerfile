@@ -7,7 +7,7 @@ LABEL maintainer = ["kyleman1224@gmail.com"]
 # set working directory 
 WORKDIR /app
 COPY . ./
-RUN npm install --legacy-peer-deps && npm run build
+RUN npm install -f && npm run build
 
 FROM nginx:alpine
 COPY --from=app-build /app/dist/final-project /usr/share/nginx/html

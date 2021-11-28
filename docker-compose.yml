@@ -19,4 +19,4 @@ services:
         - '8000:8000'
       environment:
         - 'NODE_ENV=production'
-        - 'GOOGLE_APPLICATION_CREDENTIALS=lyrical-bolt-328905-ca498657da4d.json'
+        - 'GOOGLE_APPLICATION_CREDENTIALS=lyrical-bolt-328905-99d9a0ee1aad.json'

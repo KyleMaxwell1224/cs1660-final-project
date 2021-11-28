@@ -10,9 +10,9 @@ WORKDIR /app/backend
 COPY package.json ./
 COPY package-lock.json ./
 COPY angular.json ./
-COPY creds/lyrical-bolt-328905-ca498657da4d.json ./
+COPY creds/lyrical-bolt-328905-99d9a0ee1aad.json ./
 
-RUN npm install
+RUN npm install -f
 
 EXPOSE 8000
 # add app

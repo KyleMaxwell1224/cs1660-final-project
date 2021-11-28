@@ -17,10 +17,14 @@ export class LoadFilesComponent implements OnInit {
   ngOnInit(): void {}
   
   async submit(uploads: any) {
+    let formData = new FormData();
+
     this.loading = true;
     console.log(uploads);
-    console.log('submitting' + this.files[0].name);
-    var res = await this.loadFileService.uploadFiles(this.files);
+    for (var i = 0; i < this.files.length; i++) {
+      formData.append("uploads", this.files[i], this.files[i].name);
+    }
+    var res = await this.loadFileService.uploadFiles(formData);
     console.log(res);
     this.router.navigate(['/loaded']);
   }

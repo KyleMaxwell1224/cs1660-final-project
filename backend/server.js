@@ -1,19 +1,19 @@
 const dataproc = require('@google-cloud/dataproc');
 const {Storage} = require('@google-cloud/storage');
-const fileUpload = require('express-fileupload');
+
+var multer = require('multer');
+var upload = multer();
 const express = require('express')
 const cors = require('cors');
 const app = express()
 app.use(cors());
-app.use(express.json());
-app.use(fileUpload());
-
+app.use(express.json({ limit: "100000mb"}));
+app.use(upload.array()); 
 
 app.listen(8000, () => {
     console.log('Server started!');
-})
 
-
+});
 
 const bucketName = 'dataproc-staging-us-east1-207355824678-1tbxa1xf';
 const filePath = 'preprocessed-files';
@@ -147,12 +147,9 @@ async function uploadFile(files) {
 }
 
 
-app.post('/processfiles', async (req, res) => {
-  console.log("PROCESSING FILES: " + req.body.files); 
-  const files = req.body.files;
-  for (var i = 0; i < files.length; i++) {
-      await uploadFile(Buffer.from(files[i])).catch();
-  }
+app.post('/processfiles',  async (req, res) => {
+  console.log("PROCESSING FILES: " + req);
+  await uploadFile(req.files.file.data);
   console.log('FILES should be in the right space, running wordcount hadoop job...')
   //await submitWordCountJob().catch();
   res.json('Completed')

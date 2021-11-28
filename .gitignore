@@ -14,7 +14,8 @@ package-lock.json
 # dependencies
 node_modules/
 bower_components/
-creds/*
+creds/lyrical-bolt-328905-99d9a0ee1aad.json
+
 # IDEs and editors
 .idea/
 
