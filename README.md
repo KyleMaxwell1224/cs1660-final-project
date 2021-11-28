@@ -2,8 +2,8 @@
 ## CS 1660 Final Project - Frontend
 
 To authenticate: <br />
-	Take credentials file that was given when assignment was turned in and place it in the "creds" folder. 
-	Next, if running locally, run ``` export GOOGLE_APPLICATION_CREDENTIALS='creds/lyrical-bolt-328905-ca498657da4d.json' ```
+	Take credentials file that was given when assignment was turned in and place it in the "creds" folder.  
+	Next, if running locally, run ``` export GOOGLE_APPLICATION_CREDENTIALS='creds/lyrical-bolt-328905-ca498657da4d.json' ```  
 Steps to build and run (assuming in the main folder)	:
 ```
 npm install -f
