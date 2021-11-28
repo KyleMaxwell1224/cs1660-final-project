@@ -12,7 +12,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { LoadFilesComponent } from './load-files/load-files.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { EngineLoadedComponent } from './engine-loaded/engine-loaded.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { TopNComponent } from './top-n/top-n.component';
@@ -29,6 +30,7 @@ import { SearchComponent } from './search/search.component';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
     AppRoutingModule,
@@ -36,7 +38,8 @@ import { SearchComponent } from './search/search.component';
     MatToolbarModule,
     MatIconModule,
     MatCardModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatPaginatorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -9,12 +9,13 @@ import { LoadFilesService } from '../services/load-files.service';
 })
 export class TopNComponent implements OnInit {
   value = 1;
+  results: Object[]  = [];
 
   constructor(private loadFileService: LoadFilesService, private router: Router ) { }
 
-  submitTopN() {
+  async submitTopN() {
     console.log(this.value)
-    this.loadFileService.requestTopN(this.value);
+    this.results = await this.loadFileService.requestTopN(this.value);
   }
 
   ngOnInit(): void {

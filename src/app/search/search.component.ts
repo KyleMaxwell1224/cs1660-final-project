@@ -13,8 +13,10 @@ export class SearchComponent implements OnInit {
 
   constructor(private loadFileService: LoadFilesService, private router: Router ) { }
 
-  submitSearch() {
+  async submitSearch() {
     console.log(this.search)
+    var res = await this.loadFileService.search(this.search)
+    console.log(res);
   }
   
   ngOnInit(): void {

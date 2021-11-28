@@ -1,13 +1,11 @@
 const dataproc = require('@google-cloud/dataproc');
 const {Storage} = require('@google-cloud/storage');
-var bodyParser = require('body-parser')
 const fileUpload = require('express-fileupload');
 const express = require('express')
 const cors = require('cors');
 const app = express()
 app.use(cors());
 app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: false, limit: "50mb"  }))
 app.use(fileUpload());
 
 
@@ -66,6 +64,7 @@ async function submitWordCountJob() {
 }
 
 async function topN(n) {
+  const dest_folder = 'topNres'
   const job = {
     projectId: projectId,
     region: region,
@@ -78,7 +77,7 @@ async function topN(n) {
         jarFileUris: [
           'gs://dataproc-staging-us-east1-207355824678-1tbxa1xf/TopN.jar',
         ],
-        args: ['gs://dataproc-staging-us-east1-207355824678-1tbxa1xf/wordSolution', 'gs://dataproc-staging-us-east1-207355824678-1tbxa1xf/output', n],
+        args: ['gs://dataproc-staging-us-east1-207355824678-1tbxa1xf/wordSolution', 'gs://dataproc-staging-us-east1-207355824678-1tbxa1xf/'+dest_folder, n],
       },
     },
   };
@@ -91,12 +90,60 @@ async function topN(n) {
 
   const output = await storage
     .bucket(matches[1])
-    .file(`${matches[2]}.000000000`)
+    .file(dest_folder+'/part-r-00000')
+    .download();
+
+  storage.bucket(bucketName).deleteFiles({ prefix: dest_folder+'/' }, function(err) {})
+
+  // Output a success message.
+  console.log(`Job finished successfully`);  
+  return output.toString();
+}
+
+async function search(word) {
+  const dest_folder = 'searchres'
+  const job = {
+    projectId: projectId,
+    region: region,
+    job: {
+      placement: {
+        clusterName: clusterName,
+      },
+      hadoopJob: {
+        mainClass: 'Search',
+        jarFileUris: [
+          'gs://dataproc-staging-us-east1-207355824678-1tbxa1xf/Search.jar',
+        ],
+        args: ['gs://dataproc-staging-us-east1-207355824678-1tbxa1xf/wordSolution', 'gs://dataproc-staging-us-east1-207355824678-1tbxa1xf/'+dest_folder, word],
+      },
+    },
+  };
+
+  const [jobOperation] = await jobClient.submitJobAsOperation(job);
+  const [jobResponse] = await jobOperation.promise();
+
+  const matches = jobResponse.driverOutputResourceUri.match('gs://(.*?)/(.*)');
+
+  console.log()
+
+  const output = await storage
+    .bucket(matches[1])
+    .file(dest_folder+'/part-r-00000')
     .download();
 
   // Output a success message.
   console.log(`Job finished successfully`);  
-}
+
+  storage.bucket(bucketName).deleteFiles({ prefix: dest_folder+'/', force: true  }, function(err) {
+    if (!err) {
+      console.log('Deleted folder from bucket')
+    } else {
+     // console.log(err)
+    }
+  });
+  return output.toString();
+  }
+
 async function uploadFile(files) {
   
   await storage.bucket(bucketName).upload(files, {
@@ -108,14 +155,20 @@ async function uploadFile(files) {
 
 app.post('/processfiles', async (req, res) => {
   console.log("PROCESSING FILES: " + req.body.files); 
-  await uploadFile(req.body.files).catch(console.error);
+  //await uploadFile(req.body.files).catch();
   console.log('FILES should be in the right space, running wordcount hadoop job...')
-  //await submitWordCountJob().catch(console.error);
+  //await submitWordCountJob().catch();
   res.json('Completed')
 });
 
 app.post('/topn', async (req, res) => {
   console.log("requesting top-n job! N is " + req.body.n);
- // await topN(req.body.n).catch(console.error);
-  res.json('Completed top n job')
+  results = await topN(req.body.n).catch(console.error);
+  res.json(results)
+});
+
+app.post('/search', async (req, res) => {
+  console.log("requesting search job! search is " + req.body.word);
+  results = await search(req.body.word).catch();
+  res.json(results);
 });

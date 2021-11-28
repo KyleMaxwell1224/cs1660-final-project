@@ -16,7 +16,6 @@ npm start
 Then, you can navigate to http://localhost:4200/
 To build and run Docker container (assuming in the main folder):
 ```
-cd frontend/
 docker build -t <tag> .
 docker run -p 80:80 <tag>
 ```
