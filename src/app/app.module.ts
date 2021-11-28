@@ -14,6 +14,8 @@ import {MatCardModule} from '@angular/material/card';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatTableModule} from '@angular/material/table';
+
 import { EngineLoadedComponent } from './engine-loaded/engine-loaded.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { TopNComponent } from './top-n/top-n.component';
@@ -39,7 +41,8 @@ import { SearchComponent } from './search/search.component';
     MatIconModule,
     MatCardModule,
     MatProgressSpinnerModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]
