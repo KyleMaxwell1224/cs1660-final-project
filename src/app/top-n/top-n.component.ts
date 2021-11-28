@@ -25,6 +25,7 @@ export class TopNComponent implements OnInit {
     var startDate   = new Date();
     console.log(this.value)
     this.loading = true;
+    this.ready = false;
     this.results = await this.loadFileService.requestTopN(this.value);
     var endDate   = new Date();
     var seconds = (endDate.getTime() - startDate.getTime()) / 1000;

@@ -15,7 +15,7 @@ app.listen(8000, () => {
 
 
 
-const bucketName = 'gs://dataproc-staging-us-east1-207355824678-1tbxa1xf/ ';
+const bucketName = 'dataproc-staging-us-east1-207355824678-1tbxa1xf';
 const filePath = 'preprocessed-files';
 
 projectId = 'lyrical-bolt-328905'
@@ -53,7 +53,6 @@ async function submitWordCountJob() {
   
     const matches = jobResponse.driverOutputResourceUri.match('gs://(.*?)/(.*)');
   
-  
     const output = await storage
       .bucket(matches[1])
       .file(`${matches[2]}.000000000`)
@@ -63,8 +62,10 @@ async function submitWordCountJob() {
     console.log(`Job finished successfully: ${output}`);    
 }
 
+
 async function topN(n) {
-  const dest_folder = 'topNres'
+  const dest_folder = 'topNres';
+
   const job = {
     projectId: projectId,
     region: region,
@@ -86,7 +87,7 @@ async function topN(n) {
   const [jobResponse] = await jobOperation.promise();
 
   const matches = jobResponse.driverOutputResourceUri.match('gs://(.*?)/(.*)');
-
+  console.log(matches);
 
   const output = await storage
     .bucket(matches[1])
@@ -124,7 +125,7 @@ async function search(word) {
 
   const matches = jobResponse.driverOutputResourceUri.match('gs://(.*?)/(.*)');
 
-  console.log()
+  console.log(matches)
 
   const output = await storage
     .bucket(matches[1])
@@ -133,21 +134,14 @@ async function search(word) {
 
   // Output a success message.
   console.log(`Job finished successfully`);  
-
-  storage.bucket(bucketName).deleteFiles({ prefix: dest_folder+'/', force: true  }, function(err) {
-    if (!err) {
-      console.log('Deleted folder from bucket')
-    } else {
-     // console.log(err)
-    }
-  });
+  storage.bucket(bucketName).deleteFiles({ prefix: dest_folder+'/' }, function(err) {})
   return output.toString();
   }
 
 async function uploadFile(files) {
   
   await storage.bucket(bucketName).upload(files, {
-    destination: "dest",
+    destination: "testination",
   });
   console.log(`${filePath} uploaded to ${bucketName}`);
 }
@@ -155,11 +149,15 @@ async function uploadFile(files) {
 
 app.post('/processfiles', async (req, res) => {
   console.log("PROCESSING FILES: " + req.body.files); 
-  //await uploadFile(req.body.files).catch();
+  const files = req.body.files;
+  for (var i = 0; i < files.length; i++) {
+      await uploadFile(Buffer.from(files[i])).catch();
+  }
   console.log('FILES should be in the right space, running wordcount hadoop job...')
   //await submitWordCountJob().catch();
   res.json('Completed')
 });
+
 
 app.post('/topn', async (req, res) => {
   console.log("requesting top-n job! N is " + req.body.n);

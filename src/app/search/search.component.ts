@@ -25,6 +25,7 @@ export class SearchComponent implements OnInit {
     var startDate = new Date();
     console.log(this.search)
     this.loading = true;
+    this.ready = false;
     this.results = await this.loadFileService.search(this.search);
     var endDate   = new Date();
     var seconds = (endDate.getTime() - startDate.getTime()) / 1000;

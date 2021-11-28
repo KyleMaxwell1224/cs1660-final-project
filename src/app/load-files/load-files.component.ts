@@ -20,7 +20,7 @@ export class LoadFilesComponent implements OnInit {
     this.loading = true;
     console.log(uploads);
     console.log('submitting' + this.files[0].name);
-    var res = await this.loadFileService.uploadFiles(uploads.files);
+    var res = await this.loadFileService.uploadFiles(this.files);
     console.log(res);
     this.router.navigate(['/loaded']);
   }
