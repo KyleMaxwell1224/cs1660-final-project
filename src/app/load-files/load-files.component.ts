@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import * as FileSaver from 'file-saver';
 import { LoadFilesService } from '../services/load-files.service';
 
 @Component({
@@ -20,10 +21,7 @@ export class LoadFilesComponent implements OnInit {
     let formData = new FormData();
 
     this.loading = true;
-    console.log(uploads);
-    for (var i = 0; i < this.files.length; i++) {
-      formData.append("uploads", this.files[i], this.files[i].name);
-    }
+
     var res = await this.loadFileService.uploadFiles(formData);
     console.log(res);
     this.router.navigate(['/loaded']);
