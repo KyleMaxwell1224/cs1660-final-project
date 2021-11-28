@@ -10,9 +10,9 @@ npm install -f
 npm start
 ```
 Then, you can navigate to http://localhost:4200/
-To build and run Docker container (assuming in the main folder):
+To build and run Docker containers (assuming in the main folder):
 ```
-docker build -t <tag> .
-docker run -p 80:80 <tag>
+docker-compose build
+docker-compose up
 ```
 Then, in a browser, navigate to http://localhost:80/
