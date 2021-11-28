@@ -17,6 +17,7 @@
 
     <div *ngIf="ready" >
         <h1>Top-{{value}} Results</h1>
+        <h2>Executed in {{operation_time}} seconds</h2>
         <div style="border-style: solid; border-color: black; padding: 1rem;" *ngFor="let result of results">
             <h2>{{result.key}}</h2>
             <p>{{result.count}} occurences</p>

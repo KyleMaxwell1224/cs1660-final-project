@@ -14,7 +14,7 @@ package-lock.json
 # dependencies
 node_modules/
 bower_components/
-
+creds/*
 # IDEs and editors
 .idea/
 

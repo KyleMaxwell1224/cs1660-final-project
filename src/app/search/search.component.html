@@ -5,10 +5,25 @@
     <h2>(Like a normal search engine, but made by Kyle)</h2>
     <label for="quantity">Search for a word</label>
     <input style="margin-top: 1rem;" type="text" id="quantity" name="quantity"  [(ngModel)]="search" placeholder="Search...">
-    <button mat-raised-button color="primary" style="margin-top: 1rem;" id="submit-button" (click)="submitSearch()">Submit Search</button>
+    <button mat-raised-button color="primary" style="margin-top: 1rem; margin-bottom: 1rem" id="submit-button" (click)="submitSearch()">Submit Search</button>
+
+    <div class='loading-div' *ngIf="loading">
+        <h1>Fetching Results</h1>
+        <mat-progress-spinner
+            [color]="color"
+            [mode]="mode"
+        >
+        </mat-progress-spinner>
+    </div>
+
+    <div *ngIf="ready" >
+        <h1>Search for {{search}} results</h1>
+        <h2>Executed in {{operation_time}} seconds</h2>
+        <div style="border-style: solid; border-color: black; padding: 1rem;" *ngFor="let result of results">
+            <h2>{{result.key}}</h2>
+            <p>{{result.count}} occurences</p>
+        </div>  
+    </div>
+
 </div>
 
-<mat-paginator [length]="100"
-              [pageSizeOptions]="[5, 10, 25, 100]"
-              aria-label="Select page">
-</mat-paginator>

@@ -6,11 +6,11 @@ LABEL description="This is the base docker image for my CS 1660 final project ba
 LABEL maintainer = ["kyleman1224@gmail.com"]
 
 WORKDIR /app/backend
-
 # install app dependencies
 COPY package.json ./
 COPY package-lock.json ./
 COPY angular.json ./
+COPY creds/lyrical-bolt-328905-ca498657da4d.json ./
 
 RUN npm install
 

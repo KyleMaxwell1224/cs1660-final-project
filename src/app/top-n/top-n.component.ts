@@ -16,15 +16,19 @@ export class TopNComponent implements OnInit {
   value = 1;
   results: any[]  = [];
   loading: boolean = false;
-  ready: boolean = true;
-  columnsToDisplay = ['Word', 'Count'];
+  ready: boolean = false;
+  operation_time: number = 0;
 
   constructor(private loadFileService: LoadFilesService, private router: Router ) { }
 
   async submitTopN() {
+    var startDate   = new Date();
     console.log(this.value)
     this.loading = true;
     this.results = await this.loadFileService.requestTopN(this.value);
+    var endDate   = new Date();
+    var seconds = (endDate.getTime() - startDate.getTime()) / 1000;
+    this.operation_time = seconds;
     this.loading = false;
     this.ready = true;
   }
