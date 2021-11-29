@@ -149,9 +149,9 @@ async function uploadFile(files) {
 
 app.post('/processfiles',  async (req, res) => {
   console.log("PROCESSING FILES: " + req);
-  await uploadFile(req.files.file.data);
+  //await uploadFile(req.files.file.data);
   console.log('FILES should be in the right space, running wordcount hadoop job...')
-  //await submitWordCountJob().catch();
+  await submitWordCountJob().catch();
   res.json('Completed')
 });
 
